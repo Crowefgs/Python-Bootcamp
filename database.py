@@ -22,3 +22,67 @@ ogrenciler = cursor.fetchall()
 # Sonuçları satır satır ekrana yazdırmak için bir döngü kuruyoruz
 for ogrenci in ogrenciler:
     print(ogrenci)
+"""
+# 1. SQL komutumuz: 3 sütuna veri ekleyeceğimizi söylüyoruz.
+# 3 farklı veri göndereceğimiz için 3 tane %s (yer tutucu) koyduk.
+sql = "INSERT INTO students (id, isim, yas) VALUES (%s, %s, %s)"
+
+# 2. Göndermek istediğimiz yeni öğrencinin bilgileri (Sıra, İsim, Yaş)
+yeni_ogrenci = (6, "Zeynep", 22)
+
+# 3. Komutu ve bilgileri birleştirip elçimiz aracılığıyla çalıştırıyoruz
+cursor.execute(sql, yeni_ogrenci)
+
+# 4. ÇOK ÖNEMLİ: Değişiklikleri veritabanına kalıcı olarak kaydediyoruz
+db.commit()
+
+# Terminalde göreceğimiz başarı mesajı
+print(cursor.rowcount, "yeni öğrenci başarıyla eklendi!")
+TEKLİ VERİ EKLEME
+"""
+
+"""
+# SQL komutumuz tamamen aynı, 3 sütun için 3 yer tutucu
+sql = "INSERT INTO students (id, isim, yas) VALUES (%s, %s, %s)"
+
+# Bu sefer tek bir parantez değil, köşeli parantez içinde bir LİSTE hazırlıyoruz
+yeni_ogrenciler = [
+    (5, "Burak", 20),
+    (6, "Elif", 23),
+    (7, "Can", 19)
+]
+
+# DİKKAT: execute yerine "executemany" (çoklu çalıştır) komutunu kullanıyoruz!
+cursor.executemany(sql, yeni_ogrenciler)
+
+# Yaptığımız bu büyük değişikliği veritabanına kalıcı olarak işliyoruz
+db.commit()
+
+# Kaç satırın eklendiğini dinamik olarak ekrana yazdırıyoruz
+print(cursor.rowcount, "öğrenci toplu olarak başarıyla eklendi!")"""
+
+"""
+#Diyelim ki sisteme kaydettiğimiz Mehmet isimli öğrencinin yaşını yanlış girmişiz
+# 1. SQL Komutu: students tablosunu güncelle, yaşı %s yap, AMA SADECE ismi %s olan kişide!
+sql = "UPDATE students SET yas = %s WHERE isim = %s"
+# 2. Değerlerimiz: (Yeni Yaş, Değişecek Kişinin İsmi)
+degerler=(24,"Mehmet")
+# 3. Komutu çalıştır
+cursor.execute(sql, degerler)
+# 4. Değişikliği kalıcı olarak kaydet (Yine çok önemli!)
+db.commit()
+# Kaç kaydın etkilendiğini ekrana yazdır
+print(cursor.rowcount, "Öğrencinin bilgisi güncellendi")
+"""
+#Diyelim ki az önce eklediğimiz "Can" isimli öğrenci kaydını iptal ettirdi ve onu veritabanından tamamen silmemiz gerekiyor.
+#🗑️ Veritabanından Kayıt Silmek (DELETE)
+# 1. SQL Komutu: students tablosundan veriyi sil, AMA SADECE ismi %s olanı!
+sql="delete from students where isim=%s"
+# 2. Silinecek kişinin ismi (Dikkat: Tek elemanlı bir demet yaparken sonuna virgül koymalıyız!)
+silinecek_kisi = ("Can",)
+# 3. Komutu çalıştır
+cursor.execute(sql, silinecek_kisi)
+# 4. Değişikliği kalıcı olarak kaydet (İptal edilemez adım!)
+db.commit()
+# Kaç kaydın silindiğini ekrana yazdır
+print(cursor.rowcount, "öğrenci sistemden silindi")
