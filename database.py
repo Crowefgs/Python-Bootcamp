@@ -91,10 +91,28 @@ def ogrenci_ekle(ogrenci_id, isim, yas):
 # Artık uzun uzun kod yazmaya veya eskileri silmeye gerek yok.
 # Sadece şu tek satırı yazarak sisteme yeni birilerini ekleyebilirsin:
 
-def ogrenci_sil(isim):
-    sql = "Delete from students where isim=%s"
-    silinecek_kisi = (isim,)
+def ogrenci_sil(ogrenci_id):
+    # Nerede isim %s ise değil, nerede id %s ise o satırı sil diyoruz
+    sql = "DELETE FROM students WHERE id = %s"
+
+    # Artık isim değil, benzersiz olan id numarasını gönderiyoruz
+    silinecek_kisi = (ogrenci_id,)
+
     cursor.execute(sql, silinecek_kisi)
     db.commit()
-    print(isim,"başarıyla veritabanından silindi.")
-ogrenci_sil("Ayşe")
+    print(ogrenci_id, "numaralı öğrenci başarıyla silindi.")
+
+
+def ogrenci_guncelle(ogrenci_id, yeni_yas):
+    # 1. SQL Komutu: Yaşı güncelle (%s), ama sadece id numarası şu olanı (%s)
+    sql = "UPDATE students SET yas = %s WHERE id = %s"
+
+    # 2. Değerlerimiz: Senin bulduğun doğru sıralama!
+    degerler = (yeni_yas, ogrenci_id)
+
+    # 3. Komutu çalıştır ve onayla
+    cursor.execute(sql, degerler)
+    db.commit()
+    print(ogrenci_id, "numaralı öğrencinin yaşı", yeni_yas, "olarak güncellendi!")
+
+ogrenci_guncelleme(10, 25)
