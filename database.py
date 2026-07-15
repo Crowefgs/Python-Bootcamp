@@ -61,20 +61,8 @@ db.commit()
 # Kaç satırın eklendiğini dinamik olarak ekrana yazdırıyoruz
 print(cursor.rowcount, "öğrenci toplu olarak başarıyla eklendi!")"""
 
-"""
-#Diyelim ki sisteme kaydettiğimiz Mehmet isimli öğrencinin yaşını yanlış girmişiz
-# 1. SQL Komutu: students tablosunu güncelle, yaşı %s yap, AMA SADECE ismi %s olan kişide!
-sql = "UPDATE students SET yas = %s WHERE isim = %s"
-# 2. Değerlerimiz: (Yeni Yaş, Değişecek Kişinin İsmi)
-degerler=(24,"Mehmet")
-# 3. Komutu çalıştır
-cursor.execute(sql, degerler)
-# 4. Değişikliği kalıcı olarak kaydet (Yine çok önemli!)
-db.commit()
-# Kaç kaydın etkilendiğini ekrana yazdır
-print(cursor.rowcount, "Öğrencinin bilgisi güncellendi")
-"""
-#Diyelim ki az önce eklediğimiz "Can" isimli öğrenci kaydını iptal ettirdi ve onu veritabanından tamamen silmemiz gerekiyor.
+""""
+#Diyelim ki az önce eklediğimiz ")Can" isimli öğrenci kaydını iptal ettirdi ve onu veritabanından tamamen silmemiz gerekiyor.
 #🗑️ Veritabanından Kayıt Silmek (DELETE)
 # 1. SQL Komutu: students tablosundan veriyi sil, AMA SADECE ismi %s olanı!
 sql="delete from students where isim=%s"
@@ -86,3 +74,27 @@ cursor.execute(sql, silinecek_kisi)
 db.commit()
 # Kaç kaydın silindiğini ekrana yazdır
 print(cursor.rowcount, "öğrenci sistemden silindi")
+"""
+
+
+# Öğrenci ekleme işlemini bir fonksiyona (kutucuya) hapsediyoruz
+def ogrenci_ekle(ogrenci_id, isim, yas):
+    sql = "INSERT INTO students (id, isim, yas) VALUES (%s, %s, %s)"
+    degerler = (ogrenci_id, isim, yas)
+
+    cursor.execute(sql, degerler)
+    db.commit()
+    print(isim, "başarıyla veritabanına eklendi!")
+
+
+# ---------------------------------------------------------
+# Artık uzun uzun kod yazmaya veya eskileri silmeye gerek yok.
+# Sadece şu tek satırı yazarak sisteme yeni birilerini ekleyebilirsin:
+
+def ogrenci_sil(isim):
+    sql = "Delete from students where isim=%s"
+    silinecek_kisi = (isim,)
+    cursor.execute(sql, silinecek_kisi)
+    db.commit()
+    print(isim,"başarıyla veritabanından silindi.")
+ogrenci_sil("Ayşe")
