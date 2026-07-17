@@ -78,7 +78,8 @@ print(cursor.rowcount, "öğrenci sistemden silindi")
 """
 
 
-# Öğrenci ekleme işlemini bir fonksiyona (kutucuya) hapsediyoruz
+
+#Öğrenci ekleme işlemini bir fonksiyona (kutucuya) hapsediyoruz
 def ogrenci_ekle(ogrenci_id, isim, yas):
     sql = "INSERT INTO students (id, isim, yas) VALUES (%s, %s, %s)"
     degerler = (ogrenci_id, isim, yas)
@@ -91,6 +92,8 @@ def ogrenci_ekle(ogrenci_id, isim, yas):
 # ---------------------------------------------------------
 # Artık uzun uzun kod yazmaya veya eskileri silmeye gerek yok.
 # Sadece şu tek satırı yazarak sisteme yeni birilerini ekleyebilirsin:
+
+
 
 def ogrenci_sil(ogrenci_id):
     # Nerede isim %s ise değil, nerede id %s ise o satırı sil diyoruz
@@ -128,4 +131,26 @@ def ogrencileri_listele():
         print(f"Öğrenci No: {ogrenci[0]} | İsim: {ogrenci[1]} | Yaş: {ogrenci[2]}")
     print("----------------------------")
 
+
+print("=== OKUL YÖNETİM SİSTEMİ ===")
+
+# Kullanıcıya ne yapmak istediğini soruyoruz
+cevap = input("Yeni bir öğrenci kaydetmek istiyor musunuz? (E/H): ")
+
+# Kullanıcı 'E' veya 'e' yazarsa kayıt işlemine başla
+if cevap.upper() == "E":
+    girilen_id = int(input("Öğrenci ID numarasını girin: "))
+    girilen_isim = input("Öğrenci ismini girin: ")
+    girilen_yas = int(input("Öğrenci yaşını girin: "))
+
+    ogrenci_ekle(girilen_id, girilen_isim, girilen_yas)
+    print("\nKayıt işlemi başarıyla tamamlandı.")
+
+# Kullanıcı 'H' yazarsa veya başka bir tuşa basarsa işlemi atla
+else:
+    print("\nKayıt işlemi atlandı. Herhangi bir değişiklik yapılmadı.")
+
+# Her iki durumda da son olarak listeyi göster
+print("\n--- Güncel Durum ---")
 ogrencileri_listele()
+ogrenci_sil(18)
