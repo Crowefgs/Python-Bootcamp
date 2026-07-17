@@ -13,7 +13,7 @@ print("Veritabanı bağlantısı başarıyla kuruldu!")
 # Veritabanında işlem yapmak için bir imleç (elçi) oluşturuyoruz
 cursor = db.cursor()
 
-# SQL komutumuzu Python üzerinden çalıştırıyoruz
+"""# SQL komutumuzu Python üzerinden çalıştırıyoruz
 cursor.execute("SELECT * FROM students")
 
 # Gelen tüm sonuçları alıp bir değişkene atıyoruz
@@ -22,7 +22,8 @@ ogrenciler = cursor.fetchall()
 # Sonuçları satır satır ekrana yazdırmak için bir döngü kuruyoruz
 for ogrenci in ogrenciler:
     print(ogrenci)
-"""
+
+""""""
 # 1. SQL komutumuz: 3 sütuna veri ekleyeceğimizi söylüyoruz.
 # 3 farklı veri göndereceğimiz için 3 tane %s (yer tutucu) koyduk.
 sql = "INSERT INTO students (id, isim, yas) VALUES (%s, %s, %s)"
@@ -115,4 +116,16 @@ def ogrenci_guncelle(ogrenci_id, yeni_yas):
     db.commit()
     print(ogrenci_id, "numaralı öğrencinin yaşı", yeni_yas, "olarak güncellendi!")
 
-ogrenci_guncelleme(10, 25)
+
+def ogrencileri_listele():
+    sql = "SELECT * FROM students"
+    cursor.execute(sql)
+    sonuclar = cursor.fetchall()
+
+    print("--- 8ler B Sınıf Listesi ---")
+    for ogrenci in sonuclar:
+        # f-string (formatlı metin) kullanarak verileri şık bir yapıya yerleştiriyoruz
+        print(f"Öğrenci No: {ogrenci[0]} | İsim: {ogrenci[1]} | Yaş: {ogrenci[2]}")
+    print("----------------------------")
+
+ogrencileri_listele()
