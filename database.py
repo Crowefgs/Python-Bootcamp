@@ -131,7 +131,7 @@ def ogrencileri_listele():
         print(f"Öğrenci No: {ogrenci[0]} | İsim: {ogrenci[1]} | Yaş: {ogrenci[2]}")
     print("----------------------------")
 
-
+""""
 print("=== OKUL YÖNETİM SİSTEMİ ===")
 
 # Kullanıcıya ne yapmak istediğini soruyoruz
@@ -154,3 +154,41 @@ else:
 print("\n--- Güncel Durum ---")
 ogrencileri_listele()
 ogrenci_sil(18)
+"""
+print("=== OKUL YÖNETİM SİSTEMİ ===")
+while True:
+    print("\n--- ANA MENÜ ---")
+    print("1. Yeni Öğrenci Ekle")
+    print("2. Öğrencileri Listele")
+    print("3. Öğrenci Sil")
+    print("4. Öğrenci Yaşını Güncelle")
+    print("5. Sistemden Çıkış Yap")
+
+    secim = input("Lütfen yapmak istediğiniz işlemi seçin (1/2/3/4/5): ")
+    if secim == "1":
+        print("\n--- Yeni Kayıt ---")
+        girilen_id = int(input("Öğrenci ID: "))
+        girilen_isim = input("Öğrenci İsmi: ")
+        girilen_yas = int(input("Öğrenci Yaşı: "))
+        ogrenci_ekle(girilen_id,girilen_isim, girilen_yas)
+
+    elif secim == "2":
+        ogrencileri_listele()
+
+    elif secim == "3":
+        print("\n--- Öğrenci Silme ---")
+        silinecek_id = int(input("Silmek istediğiniz öğrencinin ID numarasını girin: "))
+        ogrenci_sil(silinecek_id)
+
+    elif secim == "4":
+        print("\n--- Öğrenci Güncelleme ---")
+        guncellenecek_id = int(input("Yaşını güncellemek istediğiniz öğrencinin ID numarasını girin: "))
+        yeni_yas = int(input("Öğrencinin yeni yaşını girin:"))
+        ogrenci_guncelle(guncellenecek_id,yeni_yas)
+
+    elif secim == "5":
+        print("\nSistemden güvenli bir şekilde çıkış yapılıyor... İyi günler!")
+        break
+
+    else:
+        print("\nHatalı bir tuşa bastınız! Lütfen 1 ile 5 arasında bir rakam girin.")
